@@ -1,10 +1,13 @@
 # tezos-nft-tax-report
-This script generates CSV data of Tezos NFT transactions for tax purposes.
-It's a cleaned up version of what I hacked together for my own purposes, so it may not be useful completely out of the box for other people. I hope it is though!
+This script generates CSV data of Tezos NFT transactions for tax purposes. It queries the Teztok API to get NFT transaction data related to a given Tezos wallet.
+This is just a cleaned up version of what I hacked together for my own purposes, so it may not be useful completely out of the box for other people. I hope it is though!
 
 It's converting prices to AUD at the time of each transaction, using conversion data from the Reserve Bank of Australia (https://www.rba.gov.au/statistics/historical-data.html) that I pulled out into a simple csv. With a bit of python knowledge it should be trivial to swap that out for other currency data.
 
 USD prices are included by default alongside AUD.
+
+Many thanks for Marius Watz for his example teztok queries which kicked this off:
+https://twitter.com/mariuswatz/status/1666715664566874113?s=20
 
 ## Instructions
 To use the script, first edit `report.py` to add your wallet address in the **query_variables** dictionary. timestart and timeend represent the period that you are reporting sales over (eg. your financial/tax year). 
