@@ -6,7 +6,7 @@ It's converting prices to AUD at the time of each transaction, using conversion 
 
 USD prices are included by default alongside AUD.
 
-This is inintended to be very simple, a single python file with no external dependencies. Hopefully it's easy enough for others to repurpose too.
+This is intended to be very simple - a single python file with no external dependencies. Hopefully it's easy enough for others to repurpose too.
 
 Many thanks for Marius Watz for his example teztok queries which kicked this off:
 https://twitter.com/mariuswatz/status/1666715664566874113?s=20
