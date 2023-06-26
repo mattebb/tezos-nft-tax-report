@@ -9,7 +9,7 @@ Many thanks for Marius Watz for his example teztok queries which kicked this off
 https://twitter.com/mariuswatz/status/1666715664566874113?s=20
 
 ## Potential Issues
-This is just a cleaned up version of what I hacked together for my own purposes, so it may or may not be useful for your purposes out of the box, though I hope it is. Some things it won't support since I didn't need it:
+This is just a cleaned up version of what I hacked together for my own purposes. It may or may not be useful for your situation out of the box, though I hope it is. Some things it won't support since I didn't need it:
 - Calculating capital gains on transactions if you have bought/sold more than one edition of an identical token
 - Calculating royalties on more complex scenarios like collabs
 
