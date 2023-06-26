@@ -39,3 +39,5 @@ It will output three CSV files that you can then import into a spreadsheet to pr
 
 ![image](https://github.com/mattebb/tezos-nft-tax-report/assets/1897197/a6313321-4659-47d7-9f65-5225c2ad2108)
 
+## License
+Copyright 2023 Matt Ebb, licensed under the MIT license
