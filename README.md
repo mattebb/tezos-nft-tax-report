@@ -28,16 +28,8 @@ Then in a terminal, run
 It will output three CSV files that you can then import into a spreadsheet to present as you wish
 
 - primary-sales.csv
-
-![image](https://github.com/mattebb/tezos-nft-tax-report/assets/1897197/578f0fd1-0661-44a5-a477-433de77343fa)
-
 - secondary-sales.csv
-
-![image](https://github.com/mattebb/tezos-nft-tax-report/assets/1897197/9d760028-9e0e-4531-bab5-d03ad9b10af1)
-
 - royalties.csv
-
-![image](https://github.com/mattebb/tezos-nft-tax-report/assets/1897197/a6313321-4659-47d7-9f65-5225c2ad2108)
 
 ## License
 Copyright 2023 Matt Ebb, licensed under the MIT license
