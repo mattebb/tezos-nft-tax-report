@@ -111,6 +111,7 @@ def query_royalties():
 	    }
 	    price
 	    price_in_usd
+	    price_in_eur
 	  }
 	}'''	
 	return run_query(query, query_variables)
@@ -126,6 +127,7 @@ def query_sales():
 	        alias
 	      }
 	      price_in_usd
+	      price_in_eur
 	      token {
 	        name
 	        fa2_address
@@ -149,6 +151,7 @@ def query_buys():
 	        alias
 	      }
 	      price_in_usd
+	      price_in_eur
 	      token {
 	        name
 	        fa2_address
@@ -213,6 +216,7 @@ for sale in sales_data:
 	aud_rate = audusd_datetime(dt)
 	pricetz = float(sale['price']) / 1000000.0
 	priceusd = float(sale['price_in_usd']) / 1000000.0
+	priceeur = float(sale['price_in_eur']) / 1000000.0
 	priceaud = priceusd / aud_rate
 
 	# data to write to the csv
@@ -221,6 +225,7 @@ for sale in sales_data:
 		dt.strftime('%d-%m-%Y'),	# date
 		"${:.2f}".format(priceaud),	# sale price in AUD
 		"${:.2f}".format(priceusd),	# sale price in USD
+		"€{:.2f}".format(priceeur),	# sale price in EUR
 		"{:.2f}".format(pricetz),	# sale price in XTZ
 		]
 	
@@ -245,6 +250,7 @@ for sale in sales_data:
 	# Find the price at the date that it was sold
 	purchase_pricetz = float(buy['price']) / 1000000.0
 	purchase_priceusd = float(buy['price_in_usd']) / 1000000.0
+	purchase_priceeur = float(buy['price_in_eur']) / 1000000.0
 	purchase_priceaud = purchase_priceusd / aud_rate
 	gain_aud = priceaud - purchase_priceaud
 
@@ -255,11 +261,12 @@ for sale in sales_data:
 
 	# purchase data to write to the csv
 	secondary_row = primary_row + [
-		purchase_dt.strftime('%d-%m-%Y'),	# date
-		"${:.2f}".format(purchase_priceaud),	# sale price in AUD
-		"${:.2f}".format(purchase_priceusd),	# sale price in USD
-		"{:.2f}".format(purchase_pricetz),	# sale price in XTZ
-		"${:.2f}".format(gain_aud),	# gain in AUD
+		purchase_dt.strftime('%d-%m-%Y'),		# date
+		"${:.2f}".format(purchase_priceaud),	# purchase price in AUD
+		"${:.2f}".format(purchase_priceusd),	# purchase price in USD
+		"€{:.2f}".format(purchase_priceeur),	# purchase price in EUR
+		"{:.2f}".format(purchase_pricetz),		# purchase price in XTZ
+		"${:.2f}".format(gain_aud),				# gain in AUD
 	]
 	secondary_rows.append(secondary_row)
 
@@ -271,6 +278,7 @@ for event in royalties_data:
 	aud_rate = audusd_datetime(dt)
 	pricetz = float(event['price']) / 1000000.0
 	priceusd = float(event['price_in_usd']) / 1000000.0
+	priceeur = float(event['price_in_eur']) / 1000000.0
 	priceaud = priceusd / aud_rate
 
 	first_receiver = event['token']['royalty_receivers'][0]
@@ -282,6 +290,7 @@ for event in royalties_data:
 		dt.strftime('%d-%m-%Y'),	# date
 		"${:.2f}".format(priceaud),	# sale price in AUD
 		"${:.2f}".format(priceusd),	# sale price in USD
+		"€{:.2f}".format(priceeur),	# sale price in EUR
 		"{:.2f}".format(pricetz),	# sale price in XTZ
 		royalty_rate*100,			# multiplier of sale price
 		"${:.2f}".format(royalty_aud)
@@ -293,21 +302,21 @@ for event in royalties_data:
 
 primary_names = ['Title', 'Date', 
 				 'Sale Price {}'.format(currency),
-				 'Sale Price USD', 'Sale Price XTZ']
+				 'Sale Price USD', 'Sale Price EUR', 'Sale Price XTZ']
 write_csv("primary-sales.csv", primary_names, primary_rows)
 
 secondary_names = ['Title', 'Date', 
 				 'Sale Price {}'.format(currency),
-				 'Sale Price USD', 'Sale Price XTZ',
+				 'Sale Price USD', 'Sale Price EUR', 'Sale Price XTZ',
 				'Purchase Date', 
 				'Purchase Price {}'.format(currency),
-				'Purchase Price USD', 'Purchase Price XTZ',
+				'Purchase Price USD', 'Purchase Price EUR', 'Purchase Price XTZ',
 				'Gain {}'.format(currency)]
 write_csv("secondary-sales.csv", secondary_names, secondary_rows)
 
 royalty_names = ['Title', 'Date', 
 			'Sale Price {}'.format(currency),
-			'Sale Price USD', 'Sale Price XTZ',
+			'Sale Price USD', 'Sale Price EUR', 'Sale Price XTZ',
 			'Royalty %',
 			'Royalty {}'.format(currency)]
 write_csv("royalties.csv", royalty_names, royalty_rows)
