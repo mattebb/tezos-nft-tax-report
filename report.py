@@ -1,17 +1,40 @@
+# MIT License
+
+# Copyright (c) 2023 Matt Ebb
+
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+query_variables = {
+	"wallet":  "tz1NqA15BLrMFZNsGWBwrq8XkcXfGyCpapU1",
+	"timestart": "2021-07-01",
+	"timeend": "2022-06-30"
+}
+
+buys_start = "2019-01-01"
+currency = "AUD"
+
+
 import json	
 import os
 import datetime
 import csv
 import requests
-
-buys_start = "2020-01-01"
-query_variables = {
-	"wallet":  "tz2LxoshyxpJ1oyfN3WReb3cA38doAUxZt1H",
-	"timestart": "2021-07-01",
-	"timeend": "2022-06-30"
-}
-currency = "AUD"
-
 
 # Prepare conversion rates
 # Using the RBA exchange rates spreadsheet cleaned up 
@@ -174,6 +197,16 @@ for sale in sales_data:
 	# if 'artist_profile' in sale['token'].keys() and sale['token']['artist_profile'] is not None:
 	# 	artist = sale['token']['artist_profile']['alias']
 
+
+	# Check if this sale is a secondary sale by scanning over all the wallet's purchased tokens 
+	# and grabbing any where the contract address and id match.
+	token_fa2 = sale['token']['fa2_address']
+	token_id = sale['token']['token_id']
+	initial_purchases = [buy for buy in buys_data
+					if	buy['token']['fa2_address'] == token_fa2 and 
+						buy['token']['token_id'] == token_id ]
+
+
 	
 	# Find the price at the date that it was sold
 	dt = datetime.datetime.strptime(sale['timestamp'], '%Y-%m-%dT%H:%M:%S+00:00')
@@ -190,24 +223,14 @@ for sale in sales_data:
 		"${:.2f}".format(priceusd),	# sale price in USD
 		"{:.2f}".format(pricetz),	# sale price in XTZ
 		]
-	primary_rows.append(primary_row)
 	
 
-
-	# Check if this sale is a secondary sale by scanning over all the wallet's purchased tokens 
-	# and grabbing any where the contract address and id match.
-	token_fa2 = sale['token']['fa2_address']
-	token_id = sale['token']['token_id']
-	initial_purchases = [buy for buy in buys_data
-					if	buy['token']['fa2_address'] == token_fa2 and 
-						buy['token']['token_id'] == token_id ]
-
-
-	# If this token was a primary sale we can skip over capital gains calculation
+	# If this token was a primary sale we can add this data
+	# and skip over capital gains calculation
 	if len(initial_purchases) == 0:
+		primary_rows.append(primary_row)
 		continue
 
-	
 
 	# Calculate capital gains from this sale
 	
@@ -238,7 +261,6 @@ for sale in sales_data:
 		"{:.2f}".format(purchase_pricetz),	# sale price in XTZ
 		"${:.2f}".format(gain_aud),	# gain in AUD
 	]
-
 	secondary_rows.append(secondary_row)
 
 
