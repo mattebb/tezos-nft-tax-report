@@ -18,7 +18,7 @@
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
+# SOFTWARE. 
 
 query_variables = {
 	"wallet":  "tz1NqA15BLrMFZNsGWBwrq8XkcXfGyCpapU1",
@@ -52,8 +52,8 @@ def audusd_datetime(dt):
 	# Currency conversion to AUD
 	aud_rate = None
 
-	# backtrack to find the most recent rate if it doesn't
-	# exist for this day
+	# backtrack to find the most recent rate 
+	# if it doesn't exist for this day
 	for num_days in [0, -1, -2, -3, -4, -5]:
 		matchdt = dt + datetime.timedelta(days=num_days)
 		matchdate = matchdt.strftime('%d-%b-%Y')
