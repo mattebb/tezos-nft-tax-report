@@ -5,7 +5,7 @@ USD and EUR prices are included by default since they come in the Teztok API, an
 
 This is intended to be very simple - a single python file with no external module dependencies. Hopefully it's easy enough for others to repurpose too.
 
-**Note:** I am not an accountant, this is just a tool that helped me prepare some info for my own accountants. Please do not rely on this as anything authoritative regarding whatever specific tax regulations you have, and please get it checked by a professional.
+**Note:** This is provided as-is and is not intended as financial advice. I am not an accountant, this is just a tool that helped me prepare some info for my own accountants. Please do not rely on this as anything authoritative regarding whatever specific tax regulations you have, and please have your data checked by a professional. 
 
 Many thanks for Marius Watz for his example teztok queries which kicked this off:
 https://twitter.com/mariuswatz/status/1666715664566874113?s=20
